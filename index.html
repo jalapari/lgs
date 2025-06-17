@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Landing Page Penjualan Produk - Hubungi WhatsApp</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style>
+        /* Reset and box-sizing */
+        *, *::before, *::after {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #121212; /* dark background */
+            color: #f3f3f3;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            width: 100%;
+            max-height: 320px;
+            overflow: hidden;
+            background-color: #1e1e1e; /* dark fallback */
+            user-select: none;
+        }
+
+        .header-image {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            display: block;
+            border-radius: 0;
+            filter: brightness(0.68);
+            transition: filter 0.3s ease;
+        }
+
+        /* Products Section */
+        main {
+            flex-grow: 1;
+            max-width: 1200px;
+            margin: 48px auto 64px;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 36px;
+        }
+
+        .product-card {
+            background: #1e1e1e;
+            border-radius: 16px;
+            box-shadow:
+                0 2px 10px rgba(255, 165, 0, 0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            position: relative; /* for label */
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+            will-change: transform, box-shadow;
+        }
+
+        /* Unit Ready Label */
+        .unit-ready-label {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: linear-gradient(135deg, #ff8c00, #ff6f00);
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+            box-shadow: 0 2px 8px rgba(255, 111, 0, 0.8);
+            user-select: none;
+            pointer-events: none;
+            z-index: 20;
+            letter-spacing: 0.05em;
+        }
+
+        /* Lift on hover desktop only */
+        @media (hover: hover) and (pointer: fine) {
+            .product-card:hover {
+                transform: translateY(-8px);
+                box-shadow:
+                    0 10px 20px rgba(255, 165, 0, 0.45),
+                    0 4px 8px rgba(255, 140, 0, 0.32);
+                z-index: 10;
+            }
+        }
+
+        /* Product images container */
+        .product-image-wrapper {
+            position: relative;
+            overflow: hidden;
+            height: 180px;
+        }
+
+        /* Inner slider track for images per product */
+        .product-slider-track {
+            display: flex;
+            width: 100%;
+            height: 180px;
+            transition: transform 0.4s ease-in-out;
+        }
+
+        /* Single product image styling */
+        .product-image {
+            width: 100%;
+            flex-shrink: 0;
+            object-fit: cover;
+            border-radius: 16px 16px 0 0;
+            filter: brightness(0.9);
+            transition: filter 0.3s ease;
+        }
+
+        .product-card:hover .product-image-wrapper .product-slider-track .product-image {
+            filter: brightness(1);
+        }
+
+        /* Product details */
+        .product-info {
+            padding: 16px 20px 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-title {
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+            color: #ffa500;
+            user-select: none;
+        }
+
+        .product-description {
+            font-size: 0.925rem;
+            color: #d6d6d6;
+            line-height: 1.4;
+            margin-bottom: 16px;
+            flex-grow: 1;
+        }
+
+        /* WhatsApp Button */
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff8c00, #ff6f00);
+            color: white;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 10px rgba(255, 140, 0, 0.6);
+            user-select: none;
+            text-align: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-whatsapp:hover,
+        .btn-whatsapp:focus {
+            background: linear-gradient(135deg, #ff6f00, #e65c00);
+            box-shadow: 0 6px 14px rgba(230, 92, 0, 0.8);
+            outline: none;
+        }
+
+        /* WhatsApp icon */
+        .material-icons.whatsapp-icon {
+            font-size: 20px;
+            user-select: none;
+            color: #ffa500;
+        }
+
+        /* Responsive spacing adjustments */
+        @media (max-width: 640px) {
+            header {
+                max-height: 240px;
+            }
+            .header-image {
+                height: 240px;
+            }
+            main {
+                margin: 32px 16px 48px;
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img 
+          src="header.png" 
+          alt="Banner promo produk terbaru dengan tema hitam dan orange" 
+          class="header-image" 
+          loading="lazy" 
+        />
+    </header>
+
+    <main aria-label="Daftar produk untuk penjualan">
+        <!-- Product 1 -->
+        <article class="product-card" tabindex="0">
+            <div class="unit-ready-label">Unit Ready</div>
+            <div class="product-image-wrapper">
+                <div class="product-slider-track">
+                    <img src="1lgs140.png" alt="LGS140 Tampilan 1" class="product-image" />
+                    <img src="2lgs140.png" alt="LGS140 Tampilan 2" class="product-image" />
+                    <img src="3lgs140.png" alt="LGS140 Tampilan 3" class="product-image" />
+                </div>
+            </div>
+            <div class="product-info">
+                <h2 class="product-title">LGS140 Kelas 18-26Ton</h2>
+                <p class="product-description">Berat Operasional: 2.059 kg, Panjang Unit: 2966 mm, Tekanan Oli Maksimum: 210 kg/cm², Working Pressure 160–185 kg/cm², Impact rate 350–500 bpm.</p>
+                <a 
+                  class="btn-whatsapp"
+                  href="https://wa.me/62895385191311?text=Halo%20saya%20tertarik%20dengan%LGS140"
+                  target="_blank" rel="noopener noreferrer" aria-label="Hubungi via WhatsApp untuk lgs140"
+                >
+                    <span class="material-icons whatsapp-icon" aria-hidden="true">whatsapp</span>
+                    Pesan Via Whatsapp 
+                </a>
+            </div>
+        </article>
+
+        <!-- Product 2 -->
+        <article class="product-card" tabindex="0">
+            <div class="unit-ready-label">Unit Ready</div>
+            <div class="product-image-wrapper">
+                <div class="product-slider-track">
+                    <img src="1lgs100.png" alt="LGS100 Tampilan 1" class="product-image" />
+                    <img src="2lgs100.png" alt="LGS100 Tampilan 2" class="product-image" />
+                    <img src="3lgs100.png" alt="LGS100 Tampilan 3" class="product-image" />
+                </div>
+            </div>
+            <div class="product-info">
+                <h2 class="product-title">LGS100 kelas 10-15Ton</h2>
+                <p class="product-description">Berat Operasional: 866 kg, Panjang Unit: 2387 mm, Tekanan Oli Maksimum: 190 kg/cm², Working Pressure 150-170 kg/cm², Impact rate 400-650 bpm.</p>
+                <a 
+                  class="btn-whatsapp"
+                  href="https://wa.me/62895385191311?text=Halo%20saya%20tertarik%20dengan%20LGS100"
+                  target="_blank" rel="noopener noreferrer" aria-label="Hubungi via WhatsApp untuk LGS100"
+                >
+                    <span class="material-icons whatsapp-icon" aria-hidden="true">whatsapp</span>
+                    Pesan Via Whatsapp 
+                </a>
+            </div>
+        </article>
+
+        <!-- Product 3 -->
+        <article class="product-card" tabindex="0">
+            <div class="unit-ready-label">Unit Ready</div>
+            <div class="product-image-wrapper">
+                <div class="product-slider-track">
+                    <img src="1lgs75.png" alt="LGS75 Tampilan 1" class="product-image" />
+                    <img src="2lgs75.png" alt="LGS75 Tampilan 2" class="product-image" />
+                    <img src="3lgs75.png" alt="LGS75 Tampilan 3" class="product-image" />
+                </div>
+            </div>
+            <div class="product-info">
+                <h2 class="product-title">LGS75 6-9Ton</h2>
+                <p class="product-description">Berat Operasional: 335 kg, Panjang Unit: 1706 mm, Tekanan Oli Maksimum: 170 kg/cm², Working Pressure 120-170 kg/cm², Impact rate 400-800 bpm.</p>
+                <a 
+                  class="btn-whatsapp"
+                  href="https://wa.me/62895385191311?text=Halo%20saya%20tertarik%20dengan%20LGS75"
+                  target="_blank" rel="noopener noreferrer" aria-label="Hubungi via WhatsApp untuk LGS75 Portabel"
+                >
+                    <span class="material-icons whatsapp-icon" aria-hidden="true">whatsapp</span>
+                    Pesan Via Whatsapp 
+                </a>
+            </div>
+        </article>
+
+        <!-- Product 4 -->
+        <article class="product-card" tabindex="0">
+            <div class="unit-ready-label">Unit Ready</div>
+            <div class="product-image-wrapper">
+                <div class="product-slider-track">
+                    <img src="1lgs68.png" alt="LGS68Tampilan 1" class="product-image" />
+                    <img src="2lgs68.png" alt="LGS68Tampilan 2" class="product-image" />
+                    <img src="3lgs68.png" alt="LGS68Tampilan 3" class="product-image" />
+                </div>
+            </div>
+            <div class="product-info">
+                <h2 class="product-title">LGS68 kelas 4-7Ton</h2>
+                <p class="product-description">Berat Operasional: 263 kg, Panjang Unit: 1684 mm, Tekanan Oli Maksimum: 170 kg/cm², Working Pressure 110-140 kg/cm², Impact rate 500-900 bpm.</p>
+                <a 
+                  class="btn-whatsapp"
+                  href="https://wa.me/62895385191311?text=Halo%20saya%20tertarik%20dengan%20LGS68"
+                  target="_blank" rel="noopener noreferrer" aria-label="Hubungi via WhatsApp untuk LGS68Cepat"
+                >
+                    <span class="material-icons whatsapp-icon" aria-hidden="true">whatsapp</span>
+                    Pesan Via Whatsapp 
+                </a>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        // Per product image sliders
+        document.querySelectorAll('.product-image-wrapper').forEach(wrapper => {
+            const track = wrapper.querySelector('.product-slider-track');
+            const images = track.querySelectorAll('.product-image');
+            if (images.length < 2) return; // no slider needed if only 1 image
+            const imageCount = images.length;
+            let currentIndex = 0;
+            const slideWidth = wrapper.clientWidth; // full width for each image
+            let direction = 1; // 1 = forward, -1 = backward for ping-pong effect
+
+            // Initialize sizes and track width for horizontal scroll
+            track.style.width = `${slideWidth * imageCount}px`;
+            images.forEach(img => {
+                img.style.width = `${slideWidth}px`;
+            });
+
+            function slide() {
+                currentIndex += direction;
+                if (currentIndex >= imageCount - 1 || currentIndex <= 0) {
+                    direction = -direction; // reverse direction at ends
+                }
+                track.style.transition = 'transform 0.6s ease-in-out';
+                track.style.transform = `translateX(${-currentIndex * slideWidth}px)`;
+            }
+
+            // Auto slide every 4s
+            let slideInterval = setInterval(slide, 4000);
+
+            // Pause sliding on hover/touch
+            wrapper.addEventListener('mouseenter', () => clearInterval(slideInterval));
+            wrapper.addEventListener('mouseleave', () => slideInterval = setInterval(slide, 4000));
+            wrapper.addEventListener('touchstart', () => clearInterval(slideInterval), {passive:true});
+            wrapper.addEventListener('touchend', () => slideInterval = setInterval(slide, 4000), {passive:true});
+
+            // On resize recalc widths
+            window.addEventListener('resize', () => {
+                const newWidth = wrapper.clientWidth;
+                track.style.width = `${newWidth * imageCount}px`;
+                images.forEach(img => img.style.width = `${newWidth}px`);
+                track.style.transition = 'none'; // Disable transition to reset instantly
+                track.style.transform = `translateX(${-currentIndex * newWidth}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
+
